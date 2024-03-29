@@ -10,6 +10,7 @@
     <Folder Include="IM\" />
     <Folder Include="UM\" />
     <Folder Include="VM\" />
+    <Folder Include="Validators\" />
   </ItemGroup>
 
 </Project>
