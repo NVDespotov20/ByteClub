@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button"
+import Nav from "@/components/Nav"
 
 export default function Home() {
     return (
         <>
             <div>
-                <Button>Hello World</Button>
+                <Nav />
             </div>
         </>
     )
