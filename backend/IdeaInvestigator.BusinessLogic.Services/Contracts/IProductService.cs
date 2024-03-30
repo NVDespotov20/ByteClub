@@ -13,7 +13,6 @@ namespace IdeaInvestigator.BusinessLogic.Services.Contracts
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param></param>
         /// <returns>A list with the all the products</returns>
         Task<List<ProductVM>?> GetAllProductsAsync();
 
