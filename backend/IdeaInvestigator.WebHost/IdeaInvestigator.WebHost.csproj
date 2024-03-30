@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\IdeaInvestigator.Data\IdeaInvestigator.Data.csproj" />
     <ProjectReference Include="..\IdeaInvestigator.BusinessLogic.Models\IdeaInvestigator.BusinessLogic.Models.csproj" />
     <ProjectReference Include="..\IdeaInvestigator.BusinessLogic.Services\IdeaInvestigator.BusinessLogic.Services.csproj" />

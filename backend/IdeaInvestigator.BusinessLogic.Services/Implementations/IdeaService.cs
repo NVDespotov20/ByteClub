@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using IdeaInvestigator.BusinessLogic.Models.IM;
 using IdeaInvestigator.BusinessLogic.Models.VM;
+using IdeaInvestigator.BusinessLogic.Services.Contracts;
 using IdeaInvestigator.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace IdeaInvestigator.BusinessLogic.Services.Implementations
 {
-    public class IdeaService
+    public class IdeaService : IIdeaService
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
@@ -37,6 +40,25 @@ namespace IdeaInvestigator.BusinessLogic.Services.Implementations
 
             if (idea == null)
                 return null;
+
+            return mapper.Map<IdeaVM>(idea);
+        }
+
+        public async Task<List<string>?> GetAllIdeaTopicsByUserAsync(Guid userId)
+        {
+            List<string> topics = await context.Ideas.Where(i => i.CreatorId == userId).Select(i => i.Topic).ToListAsync();
+
+            if (topics == null)
+                return null;
+
+            return topics;
+        }
+        public async Task<IdeaVM?> CreateNewIdeaAsync(IdeaIM ideaInput, Guid userId)
+        {
+            var idea = mapper.Map<Idea>(ideaInput);
+
+            await context.Ideas.AddAsync(idea);
+            await context.SaveChangesAsync();
 
             return mapper.Map<IdeaVM>(idea);
         }
