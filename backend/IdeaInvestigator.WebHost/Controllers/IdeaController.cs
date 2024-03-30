@@ -10,7 +10,7 @@ namespace IdeaInvestigator.WebHost.Controllers
     [Authorize]
     [Route("api/ideas")]
     [ApiController]
-    public class IdeaController : Controller
+    public class IdeaController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IIdeaService ideaService;
 
