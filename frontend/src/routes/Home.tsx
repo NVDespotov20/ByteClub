@@ -19,7 +19,7 @@ export default function Home() {
                     </div>
 
                     <div className="flex gap-5">
-                        <Button onClick={() => {navigate("/signin")}} className="p-8 w-full text-2xl">Sign In</Button>
+                        <Button onClick={() => {navigate("/signin")}} className="p-8 w-full text-2xl">Log In</Button>
                         <Button onClick={() => {navigate("/signup")}} className="p-8 w-full text-2xl">Sign Up</Button>
                     </div>
                 </div>
