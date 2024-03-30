@@ -7,7 +7,7 @@ namespace IdeaInvestigator.WebHost.Controllers;
 
 [Route("api/auth")]
 [ApiController]
-public class AuthController : Controller
+public class AuthController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IUserService userService;
     private readonly ITokenService tokenService;

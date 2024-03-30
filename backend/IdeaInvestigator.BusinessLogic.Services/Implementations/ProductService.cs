@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdeaInvestigator.BusinessLogic.Models.IM;
 using IdeaInvestigator.BusinessLogic.Models.VM;
 using IdeaInvestigator.BusinessLogic.Services.Contracts;
 using IdeaInvestigator.Data.Models;
@@ -41,6 +42,19 @@ namespace IdeaInvestigator.BusinessLogic.Services.Implementations
                 return null;
 
             return mapper.Map<ProductVM>(product);
+        }
+
+        public async Task<(ProductVM?, IdentityResult)> CreateProductAsync(ProductIM product)
+        {
+            var newProduct = mapper.Map<Product>(product);
+
+            context.Products.Add(newProduct);
+            var identityResult = await context.SaveChangesAsync();
+
+            if (identityResult == 0)
+                return (null, IdentityResult.Failed(new IdentityError { Description = "Failed to create product" }));
+
+            return (mapper.Map<ProductVM>(newProduct), IdentityResult.Success);
         }
     }
 }
