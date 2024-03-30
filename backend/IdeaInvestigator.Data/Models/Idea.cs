@@ -11,7 +11,7 @@ namespace IdeaInvestigator.Data.Models
     public class Idea
     {
         [Key] public Guid Id { get; set; } = Guid.NewGuid();
-        [ForeignKey("User")] public Guid CreatorId { get; set; }
+        public Guid CreatorId { get; set; }
         public string Topic { get; set; } = null!;
         public string AdvertPlatforms { get; set; } = null!;
         public string TargetAudience { get; set; } = null!;
@@ -20,6 +20,6 @@ namespace IdeaInvestigator.Data.Models
         public int NumberOfCampaigns { get; set; }
         public string Suggestion { get; set; } = null!;
 
-        public User User { get; set; } = null!;
+        [ForeignKey(nameof(CreatorId))] public User User { get; init; }
     }
 }
