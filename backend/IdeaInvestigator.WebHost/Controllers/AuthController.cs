@@ -56,6 +56,6 @@ public class AuthController : Controller
 
         var token = await tokenService.CreateTokenForUserAsync(user!.Id);
 
-        return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+        return Ok($"\"{new JwtSecurityTokenHandler().WriteToken(token)}\"");
     }
 }
