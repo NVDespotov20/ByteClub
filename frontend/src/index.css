@@ -72,6 +72,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: hsl(222.2 84% 4.9%);
+    background: rgba(17,33,45,1); 
   }
 }

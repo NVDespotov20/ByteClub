@@ -49,7 +49,7 @@ export default function SignIn() {
             <div className="w-2/5 flex text-white flex-col items-center gap-6 justify-center min-h-screen bg-[#09090b] p-16">
                 <div className="flex flex-col gap-4 w-full">
                     <h1 className="text-3xl font-bold">Sign In</h1>
-                    <p className="text-[#777]">Welcome to YYYY! Inter your personal details.</p>
+                    <p className="text-[#777]">Welcome to GroWith! Inter your personal details.</p>
                 </div>
 
                 <div className="w-full">
@@ -74,7 +74,7 @@ export default function SignIn() {
                     <div className="flex items-center justify-center flex-col z-10 w-[450px] gap-4">
                         <div className="flex items-left justify-center flex-col w-full">
                             <h1 className="text-[80px] font-bold whitespace-nowrap">Welcome to</h1>
-                            <h1 className="text-[80px] font-bold">YYYY</h1>
+                            <h1 className="text-[80px] font-bold">GroWith</h1>
                         </div>
 
                         <div className="flex flex-col justify-center items-left w-full gap-8 text-lg">
