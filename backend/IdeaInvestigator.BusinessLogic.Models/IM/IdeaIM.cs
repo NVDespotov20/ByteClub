@@ -30,9 +30,5 @@ namespace IdeaInvestigator.BusinessLogic.Models.IM
 
         [Required]
         public int NumberOfCampaigns { get; set; } = 0;
-
-        [Required]
-        [StringLength(int.MaxValue, MinimumLength = 2)]
-        public string Suggestion { get; set; } = string.Empty;
     }
 }

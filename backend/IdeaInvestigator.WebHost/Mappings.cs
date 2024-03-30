@@ -12,5 +12,7 @@ public class Mappings : Profile
         CreateMap<UserIM, User>();
         CreateMap<User, UserVM>();
         CreateMap<Product, ProductVM>();
+        CreateMap<Idea, IdeaVM>();
+        CreateMap<IdeaIM, Idea>();
     }
 }

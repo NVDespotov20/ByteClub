@@ -21,7 +21,5 @@ namespace IdeaInvestigator.BusinessLogic.Models.VM
         public string Tags { get; set; } = null!;
 
         public int NumberOfCampaigns { get; set; } = 0;
-
-        public string Suggestion { get; set; } = null!;
     }
 }

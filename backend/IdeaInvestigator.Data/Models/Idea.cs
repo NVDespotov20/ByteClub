@@ -18,7 +18,6 @@ namespace IdeaInvestigator.Data.Models
         public int Budget { get; set; }
         public string Tags { get; set; } = null!;
         public int NumberOfCampaigns { get; set; }
-        public string Suggestion { get; set; } = null!;
 
         [ForeignKey(nameof(CreatorId))] public User User { get; init; }
     }

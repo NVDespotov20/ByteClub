@@ -56,6 +56,7 @@ namespace IdeaInvestigator.BusinessLogic.Services.Implementations
         public async Task<IdeaVM?> CreateNewIdeaAsync(IdeaIM ideaInput, Guid userId)
         {
             var idea = mapper.Map<Idea>(ideaInput);
+            idea.CreatorId = userId;
 
             await context.Ideas.AddAsync(idea);
             await context.SaveChangesAsync();
