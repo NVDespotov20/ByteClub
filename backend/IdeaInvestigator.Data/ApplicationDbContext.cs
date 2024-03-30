@@ -15,4 +15,5 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
     }
     
     public DbSet<Product> Products { get; set; }
+    public DbSet<Idea> Ideas { get; set; }
 }
