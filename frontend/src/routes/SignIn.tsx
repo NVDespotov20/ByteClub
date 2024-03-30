@@ -1,14 +1,48 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
+import { Api } from "@/api/Api"
+import { useToast } from "@/components/ui/use-toast"
+
 export default function SignIn() {
-    const [username, setUsername] = useState<string>("")
+    const { toast } = useToast()
+
+    const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
     let navigate = useNavigate()
+
+    useEffect(() => {
+        if(localStorage.getItem('token') !== null)
+            navigate("/idea-analysis")
+    }, [])
+
+    function signIn(e: any) {
+        e.preventDefault()
+
+        const client = new Api({
+            baseUrl: import.meta.env.VITE_BACKEND_URL,
+        });
+
+        client.api.authLoginCreate({
+            email: email,
+            password: password
+        }).then((response) => {
+            if (response.status === 200) {
+                localStorage.setItem("token", response.data)
+                navigate("/idea-analysis")
+            }
+        }).catch((error) => {
+            toast({
+                title: "Error",
+                description: error,
+            })
+        })
+
+    }
 
     return(
         <div className="min-w-screen min-h-screen flex">
@@ -19,11 +53,11 @@ export default function SignIn() {
                 </div>
 
                 <div className="w-full">
-                    <form className="flex flex-col gap-2">
-                        <Input onChange={(e) => {setUsername(e.target.value)}} placeholder="Username" />
+                    <form onSubmit={signIn} className="flex flex-col gap-2">
+                        <Input type="email" onChange={(e) => {setEmail(e.target.value)}} placeholder="Email" />
                         <Input onChange={(e) => {setPassword(e.target.value)}} type="password" placeholder="Password" />
 
-                        <Button type="submit" className="mt-4">Sign up</Button>
+                        <Button type="submit" className="mt-4">Sign In</Button>
                     </form>
                 </div>
 

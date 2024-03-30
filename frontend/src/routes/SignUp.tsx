@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+
+import { Api } from "@/api/Api"
 
 export default function SignUp() {
     const [firstName, setFirstName] = useState<string>("")
@@ -14,6 +17,47 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState<string>("")
 
     let navigate = useNavigate()
+    const { toast } = useToast()
+
+    useEffect(() => {
+        if(localStorage.getItem('token') !== null)
+            navigate("/idea-analysis")
+    }, [])
+
+    function signUp(e: any) {
+        e.preventDefault()
+
+        if (password !== confirmPassword) {
+            toast({
+                title: "Password mismatch",
+                description: "The password and confirm password do not match",
+            })
+            return
+        }
+
+        const client = new Api({
+            baseUrl: import.meta.env.VITE_BACKEND_URL,
+        });
+
+        client.api.authSignupCreate({
+            firstName: firstName,
+            lastName: lastName,
+            userName: username,
+            email: email,
+            phoneNumber: phoneNumber,
+            password: password
+        }).then((response) => {
+            if (response.status === 200) {
+                navigate("/signin")
+            }
+        }).catch((error) => {
+            toast({
+                title: "Error",
+                description: Object.values(error.errors).join("\n"),
+            })
+        })
+
+    }
 
     return(
         <div className="min-w-screen min-h-screen flex">
@@ -24,7 +68,7 @@ export default function SignUp() {
                 </div>
 
                 <div className="w-full">
-                    <form className="flex flex-col gap-2">
+                    <form onSubmit={signUp} className="flex flex-col gap-2">
                         <div className="flex w-full gap-2">
                             <div className="w-full gap-2 flex flex-col">
                                 <Input onChange={(e) => {setFirstName(e.target.value)}} placeholder="First Name" />
