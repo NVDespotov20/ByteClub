@@ -13,4 +13,6 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
         : base(options)
     {
     }
+    
+    public DbSet<Product> Products { get; set; }
 }
