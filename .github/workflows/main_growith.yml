@@ -22,6 +22,9 @@ jobs:
           dotnet-version: '8.x'
           include-prerelease: true
 
+      - name: Restore NuGet packages
+        run: dotnet restore ./backend/IdeaInvestigator.WebHost/IdeaInvestigator.WebHost.csproj
+
       - name: Build with dotnet
         run: dotnet build --no-restore -c Release ./backend/IdeaInvestigator.WebHost/IdeaInvestigator.WebHost.csproj
 
