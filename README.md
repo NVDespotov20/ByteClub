@@ -44,7 +44,7 @@ and probable success rate of the product according to their goals.
 <br>
 
 ## Website
-You can visit the website here: <a href="https://gotaxi.azurewebsites.net/">GroWith</a> <img height="10" src="https://via.placeholder.com/10/FF6EC7?text=+" alt="color">
+You can visit the website here: <a href="https://orange-glacier-0d96bb603.5.azurestaticapps.net/">GroWith</a> <img height="10" src="https://via.placeholder.com/10/FF6EC7?text=+" alt="color">
 
 <br>
 
