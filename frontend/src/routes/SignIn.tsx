@@ -32,7 +32,8 @@ export default function SignIn() {
             password: password
         }).then((response) => {
             if (response.status === 200) {
-                localStorage.setItem("token", response.data)
+                localStorage.setItem("token", response.data.token)
+                localStorage.setItem("userId", response.data.userId)
                 navigate("/idea-analysis")
             }
         }).catch((error) => {

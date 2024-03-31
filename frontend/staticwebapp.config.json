@@ -1,0 +1,54 @@
+{
+    "routes": [
+        {
+            "route": "/signin",
+            "allowedRoles": [
+                "anonymous"
+            ]
+        },
+        {
+            "route": "/signup",
+            "allowedRoles": [
+                "anonymous"
+            ]
+        },
+        {
+            "route": "/idea-analysis",
+            "allowedRoles": [
+                "anonymous"
+            ]
+        }
+    ],
+    "navigationFallback": {
+        "rewrite": "index.html",
+        "exclude": [
+            "/images/.{png,jpg,gif}",
+            "/css/*"
+        ]
+    },
+    "responseOverrides": {
+        "400": {
+            "rewrite": "/"
+        },
+        "401": {
+            "redirect": "/"
+        },
+        "403": {
+            "rewrite": "/"
+        },
+        "404": {
+            "rewrite": "/index.html",
+            "statusCode": 200
+        }
+    },
+    "mimeTypes": {
+        ".js": "text/javascript",
+        ".mjs": "text/javascript",
+        ".jsx": "text/javascript",
+        ".tsx": "text/javascript",
+        ".ts": "text/javascript",
+        ".html": "text/html",
+        ".json": "text/json",
+        ".css": "text/css"
+    }
+  }

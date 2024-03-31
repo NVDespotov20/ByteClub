@@ -30,15 +30,15 @@ namespace IdeaInvestigator.WebHost.Controllers
         }
         
         [HttpGet("gen-posts")]
-        public async Task<ActionResult<List<string>>> GenSocialMediaPostsAsync([FromQuery] Guid ideaId, AuthedUser authedUser)
+        public async Task<ActionResult<List<string>>> GenSocialMediaPostsAsync([FromQuery] Guid ideaId, [FromQuery] Guid AuthedUserId)
         {
             var idea = await ideaService.GetIdeaByIdAsync(ideaId);
 
             if (idea == null)
                 return NotFound();
 
-            if (idea.CreatorId != authedUser.UserId)
-                return Unauthorized();
+            if (idea.CreatorId != AuthedUserId)
+                return Unauthorized(AuthedUserId);
 
             var chat = apiClient.Chat.CreateConversation();
             chat.Model = OpenAI_API.Models.Model.GPT4;
@@ -58,14 +58,14 @@ namespace IdeaInvestigator.WebHost.Controllers
         }
 
         [HttpGet("gen-advice")]
-        public async Task<ActionResult<string>> GenMarketingAdviceAsync([FromQuery] Guid ideaId, AuthedUser authedUser)
+        public async Task<ActionResult<string>> GenMarketingAdviceAsync([FromQuery] Guid ideaId, [FromQuery] Guid AuthedUserId)
         {
             var idea = await ideaService.GetIdeaByIdAsync(ideaId);
             if (idea == null)
                 return NotFound();
 
-            if (idea.CreatorId != authedUser.UserId)
-                return Unauthorized();
+            if (idea.CreatorId != AuthedUserId)
+                return Unauthorized(AuthedUserId);
 
             var chat = apiClient.Chat.CreateConversation();
             chat.Model = OpenAI_API.Models.Model.GPT4;
@@ -83,49 +83,48 @@ namespace IdeaInvestigator.WebHost.Controllers
             };
             return Ok(responseDict);
         }
-        [HttpGet("cat-idea")] 
-        public  async Task<ActionResult<string>> CategorizeIdeaAsync([FromQuery] Guid ideaId, AuthedUser authedUser)
+        
+        public  async Task<string> CategorizeIdeaAsync([FromQuery] Guid ideaId, [FromQuery] Guid AuthedUserId)
         {
             var idea = await ideaService.GetIdeaByIdAsync(ideaId);
             if (idea == null)
-                return NotFound();
+                return "NotFound";
 
-            if (idea.CreatorId != authedUser.UserId)
-                return Unauthorized();
+            if (idea.CreatorId != AuthedUserId)
+                return "Unauthorized";
 
             var chat = apiClient.Chat.CreateConversation();
             chat.Model = OpenAI_API.Models.Model.GPT4;
             chat.RequestParameters.Temperature = 0;
             chat.RequestParameters.ResponseFormat = OpenAI_API.Chat.ChatRequest.ResponseFormats.JsonObject;
             
-            chat.AppendSystemMessage("You are a bussiness interpreter for different companies. People give you their ideas and you categorize their product into one of the following categories: Toys & Games, Hobbies, Games & Accessories, Arts & Crafts, Remote & App Controlled Vehicles & Parts, Toy Figures & Playsets, Dress Up & Pretend Play, Remote & App Controlled Vehicle Parts, Stuffed Animals & Plush Toys, Board Games, Sports & Outdoor Play, Home & Kitchen, Puzzles, Dolls & Accessories, Party Supplies, Jigsaw Puzzles, Learning & Education, Sports & Outdoors, Action Figures, Play Vehicles, Accessories, Novelty & Gag Toys, Card Games, Baby & Toddler Toys, Dolls, Trains & Accessories, Models & Model Kits, Pretend Play, Stuffed Animals & Teddy Bears, Building Toys, Craft Kits, Sports & Fitness, Model Kits, Stickers, Home Décor, Playsets, Pools & Water Toys, Costumes, Building Sets, Outdoor Recreation, Furniture, Baby Products, Leisure Sports & Game Room, Wall Décor, Nursery, Kids' Electronics, Playsets & Vehicles, Puppets & Puppet Theaters, Bedding, Décor, Science Kits & Toys, Kids' Bedding, Hobby Building Tools & Hardware, Kids' Furniture, Power Plant & Driveline Systems, Die-Cast Vehicles, Cycling, Remote & App Controlled Vehicles, Train Cars, Play Trains & Railway Sets, Hand Puppets, Plush Figures, Figure Kits, Doll Accessories, Toy Vehicles, Standard Playing Card Decks, Party Favors, Play Sets & Playground Equipment, Paints, Game Accessories, Kids' Bikes & Accessories, Counting & Math Toys, Fan Shop, Brain Teasers, Collectible Toys, Event & Party Supplies, Kids' Room Décor, Kitchen Toys, Window Treatments, Vehicle Playsets, Train Sets, Quadcopters & Multirotors, Office Products, Office & School Supplies, Window Stickers & Films, Window Films, Airplane & Jet Kits, Electronic Learning Toys, Toys & Game Room, Kitchen & Dining, Musical Instruments, Scenery, Blasters & Foam Play, Servos & Parts, Collectible Display & Storage, Drawing & Painting Supplies, Outdoor Games & Activities, Pre-Built & Diecast Models, Pool Rafts & Inflatable Ride-ons, Sheets & Pillowcases\n You give a comma seperated list of categories to which the product belongs.");
+            chat.AppendSystemMessage("You are a bussiness interpreter for different companies. People give you their ideas and you categorize their product into categories. Use simple one word categories ONLY!\n You give a comma seperated list of categories to which the product belongs.");
             // return model response as json object 
 
             chat.AppendUserInput($"This is the idea of my company: {idea.Topic}\nTo what categories does this idea belong?");
 
             var response = await chat.GetResponseFromChatbotAsync();
-            Dictionary<string, string> responseDict = new Dictionary<string, string>
-            {
-                { "response", response }
-            };
-            return Ok(responseDict);
+            System.Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.Console.WriteLine(response);
+            return response;
         }
         [HttpGet("find-competitors")]
-        public async Task<ActionResult<string>> FindCompetitorsAsync([FromQuery] Guid ideaId, AuthedUser authedUser)
+        public async Task<ActionResult<string>> FindCompetitorsAsync([FromQuery] Guid ideaId, [FromQuery] Guid AuthedUserId)
         {
             var idea = await ideaService.GetIdeaByIdAsync(ideaId);
             if (idea == null)
                 return NotFound();
 
-            if (idea.CreatorId != authedUser.UserId)
+            if (idea.CreatorId != AuthedUserId)
                 return Unauthorized();
            string? categories = await ideaService.GetIdeaCategoriesAsync(ideaId);
             if(categories == null)
-                categories = (await CategorizeIdeaAsync(ideaId, authedUser)).Value; 
-
+                categories = (await CategorizeIdeaAsync(ideaId, AuthedUserId)); 
+            System.Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.Console.WriteLine(categories);
             if(categories == null)
                 return BadRequest();
-            var products = await productService.MatchProductsByAtLeastOneCategoryAsync(categories.Split(",").ToList()); 
+            var products = await productService.MatchProductsByAtLeastOneCategoryAsync(categories.Split(", ").ToList()); 
             var chat = apiClient.Chat.CreateConversation();
             chat.Model = OpenAI_API.Models.Model.GPT4;
             chat.RequestParameters.Temperature = 0;

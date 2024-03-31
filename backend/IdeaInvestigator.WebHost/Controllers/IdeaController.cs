@@ -36,7 +36,9 @@ namespace IdeaInvestigator.WebHost.Controllers
         {
             var idea = await ideaService.CreateNewIdeaAsync(ideaInput, authedUser.UserId);
 
-            return Ok(new Dictionary<string, string> { { "id", idea.Id.ToString() } });
+            string response = idea.Id.ToString();
+
+            return Ok(response);
         }
     }
 }

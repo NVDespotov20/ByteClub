@@ -9,6 +9,11 @@
  * ---------------------------------------------------------------
  */
 
+export interface AuthedUser {
+  /** @format uuid */
+  userId?: string;
+}
+
 export interface IdeaIM {
   /**
    * @minLength 2
@@ -36,6 +41,8 @@ export interface IdeaIM {
 export interface IdeaVM {
   /** @format uuid */
   id?: string;
+  /** @format uuid */
+  creatorId?: string;
   topic?: string | null;
   advertPlatforms?: string | null;
   targetAudience?: string | null;
@@ -44,6 +51,29 @@ export interface IdeaVM {
   tags?: string | null;
   /** @format int32 */
   numberOfCampaigns?: number;
+}
+
+export interface ProductIM {
+  /**
+   * @minLength 2
+   * @maxLength 320
+   */
+  name: string;
+  /**
+   * @minLength 2
+   * @maxLength 2147483647
+   */
+  description: string;
+  /**
+   * @minLength 2
+   * @maxLength 320
+   */
+  category: string;
+  /**
+   * @minLength 2
+   * @maxLength 2048
+   */
+  image: string;
 }
 
 export interface UserIM {
@@ -368,6 +398,171 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         secure: true,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ML
+     * @name MlGenPostsList
+     * @request GET:/api/ml/gen-posts
+     * @secure
+     */
+    mlGenPostsList: (
+      data: AuthedUser,
+      query?: {
+        /** @format uuid */
+        ideaId?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<string[], any>({
+        path: `/api/ml/gen-posts`,
+        method: "GET",
+        query: query,
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ML
+     * @name MlGenAdviceList
+     * @request GET:/api/ml/gen-advice
+     * @secure
+     */
+    mlGenAdviceList: (
+      data: AuthedUser,
+      query?: {
+        /** @format uuid */
+        ideaId?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<string, any>({
+        path: `/api/ml/gen-advice`,
+        method: "GET",
+        query: query,
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ML
+     * @name MlCatIdeaList
+     * @request GET:/api/ml/cat-idea
+     * @secure
+     */
+    mlCatIdeaList: (
+      data: AuthedUser,
+      query?: {
+        /** @format uuid */
+        ideaId?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<string, any>({
+        path: `/api/ml/cat-idea`,
+        method: "GET",
+        query: query,
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ML
+     * @name MlFindCompetitorsList
+     * @request GET:/api/ml/find-competitors
+     * @secure
+     */
+    mlFindCompetitorsList: (
+      data: AuthedUser,
+      query?: {
+        /** @format uuid */
+        ideaId?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<string, any>({
+        path: `/api/ml/find-competitors`,
+        method: "GET",
+        query: query,
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Product
+     * @name ProductCreateCreate
+     * @request POST:/api/product/create
+     * @secure
+     */
+    productCreateCreate: (data: ProductIM, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/product/create`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Product
+     * @name ProductGetList
+     * @request GET:/api/product/get
+     * @secure
+     */
+    productGetList: (
+      query?: {
+        /** @format uuid */
+        id?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/product/get`,
+        method: "GET",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Product
+     * @name ProductGetAllList
+     * @request GET:/api/product/get-all
+     * @secure
+     */
+    productGetAllList: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/product/get-all`,
+        method: "GET",
+        secure: true,
         ...params,
       }),
   };

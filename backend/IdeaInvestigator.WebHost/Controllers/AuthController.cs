@@ -55,7 +55,11 @@ public class AuthController : Microsoft.AspNetCore.Mvc.Controller
         var user = await userService.GetUserByEmailAsync(userInput.Email);
 
         var token = await tokenService.CreateTokenForUserAsync(user!.Id);
-
-        return Ok($"\"{new JwtSecurityTokenHandler().WriteToken(token)}\"");
+        Dictionary<string, string> response = new()
+        {
+            { "token", new JwtSecurityTokenHandler().WriteToken(token) },
+            { "userId", user.Id.ToString() }
+        };
+        return Ok(response);
     }
 }
