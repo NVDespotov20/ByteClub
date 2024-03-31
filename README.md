@@ -34,7 +34,8 @@ and probable success rate of the product according to their goals.
 **Server:** 
 <code><img height="40" src="https://seeklogo.com/images/C/c-sharp-c-logo-02F17714BA-seeklogo.com.png" alt="C#"></code>
 <code><img height="40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/.NET_Core_Logo.svg/1024px-.NET_Core_Logo.svg.png" alt="ASP.NET"></code>
-<code><img height="40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/800px-Python-logo-notext.svg.png" alt="Python"></code>
+
+**Database:** 
 <code><img height="40" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/800px-Postgresql_elephant.svg.png" alt="PostgreSQL"></code>
 
 **Design:** 
@@ -48,9 +49,16 @@ You can visit the website here: <a href="https://orange-glacier-0d96bb603.5.azur
 
 <br>
 
+## Presentation
+You can view the presentation here: <a href="https://codingburgas-my.sharepoint.com/:p:/g/personal/aikostov20_codingburgas_bg/ESf3mh2ssPxAm5igrRR-MzUB14ZU_0TnW3Gmqf624eiJwg">Presentation</a> <img height="10" src="https://via.placeholder.com/10/2596be?text=+" alt="color">
+
+<br>
+
 ## Screenshots
 
 <p align="center" display="flex">
   <img src="https://cdn.discordapp.com/attachments/919709363621466143/1223905893729697882/smartmockups_luf7e1zr-removebg-preview.png?ex=661b8e30&is=66091930&hm=b5b68e2b24a816ffc81afbfb59063fdb449f08e1943ddc07d1f4307a0d39ec81&" width="500">
   <img src="https://cdn.discordapp.com/attachments/919709363621466143/1223905893981224971/smartmockups_luf74fam-removebg-preview.png?ex=661b8e30&is=66091930&hm=0fda3b129204bc0c0af1a04e096fb9a848c6c0c1c1aff06f45e1de3aee0aa742&" width="500">
 </p>
+
+<hr>
