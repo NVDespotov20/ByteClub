@@ -23,16 +23,17 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build --no-restore -c Release ./backend/IdeaInvestigator.WebHost/IdeaInvestigator.WebHost.csproj
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish --no-build -c Release -o ./publish ./backend/IdeaInvestigator.WebHost/IdeaInvestigator.WebHost.csproj
+
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ./backend/IdeaInvestigator.WebHost/IdeaInvestigator.WebHost.csproj
 
   deploy:
     runs-on: windows-latest
