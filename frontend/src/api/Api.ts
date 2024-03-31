@@ -9,6 +9,43 @@
  * ---------------------------------------------------------------
  */
 
+export interface IdeaIM {
+  /**
+   * @minLength 2
+   * @maxLength 320
+   */
+  topic: string;
+  /**
+   * @minLength 2
+   * @maxLength 2147483647
+   */
+  advertPlatforms: string;
+  /**
+   * @minLength 2
+   * @maxLength 320
+   */
+  targetAudience: string;
+  /** @format int32 */
+  budget: number;
+  /** @minLength 1 */
+  tags: string;
+  /** @format int32 */
+  numberOfCampaigns: number;
+}
+
+export interface IdeaVM {
+  /** @format uuid */
+  id?: string;
+  topic?: string | null;
+  advertPlatforms?: string | null;
+  targetAudience?: string | null;
+  /** @format int32 */
+  budget?: number;
+  tags?: string | null;
+  /** @format int32 */
+  numberOfCampaigns?: number;
+}
+
 export interface UserIM {
   /**
    * @minLength 2
@@ -296,6 +333,41 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         secure: true,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Idea
+     * @name IdeasHistoryList
+     * @request GET:/api/ideas/history
+     * @secure
+     */
+    ideasHistoryList: (params: RequestParams = {}) =>
+      this.request<IdeaVM, any>({
+        path: `/api/ideas/history`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Idea
+     * @name IdeasNewIdeaCreate
+     * @request POST:/api/ideas/newIdea
+     * @secure
+     */
+    ideasNewIdeaCreate: (data: IdeaIM, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/ideas/newIdea`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         ...params,
       }),
   };
