@@ -17,6 +17,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
+import gradientGreen from "/public/gradient-green.png"
+import gradientPurple from "/public/gradient-purple.png"
+
 export default function IdeaAnalysis() {
     const textRef = useRef<HTMLTextAreaElement>(null)
     const { toast } = useToast()
@@ -128,8 +131,8 @@ export default function IdeaAnalysis() {
     return (
         <>
             <div className="min-w-screen min-h-screen">
-                <img src="/public/gradient-green.png" draggable={false} className="fixed select-none left-0 top-0" alt="" />
-                <img src="/public/gradient-purple.png" draggable={false} className="fixed select-none right-0 top-0" alt="" />
+                <img src={gradientGreen} draggable={false} className="fixed select-none left-0 top-0" alt="" />
+                <img src={gradientPurple} draggable={false} className="fixed select-none right-0 top-0" alt="" />
 
                 <Sheet>
                     <SheetTrigger>

@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Api } from "@/api/Api"
 import { useToast } from "@/components/ui/use-toast"
 
+import eclipseOne from "/public/Eclipse.png"
+import eclipseTwo from "/public/Eclipse1.png"
+
 export default function SignIn() {
     const { toast } = useToast()
 
@@ -69,8 +72,8 @@ export default function SignIn() {
             </div>
 
             <div className="w-3/5 relative min-h-full flex justify-center text-white items-center max-lg:w-full py-8">
-                <img src="/public/Eclipse.png" className="absolute top-0 select-none" draggable={false} alt="" />
-                <img src="/public/Eclipse1.png" className="absolute bottom-0 right-0 select-none" draggable={false} alt="" />
+                <img src={eclipseOne} className="absolute top-0 select-none" draggable={false} alt="" />
+                <img src={eclipseTwo} className="absolute bottom-0 right-0 select-none" draggable={false} alt="" />
 
                     <div className="flex items-center justify-center flex-col z-10 w-[450px] gap-4">
                         <div className="flex items-left justify-center flex-col w-full">
