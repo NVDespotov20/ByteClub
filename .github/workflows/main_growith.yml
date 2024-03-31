@@ -23,18 +23,16 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: |
-          cd backend
-          dotnet build --configuration Release
+        run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o /backend/IdeaInvestigator.WebHost
+        run: dotnet publish -c Release -o backend/IdeaInvestigator.WebHost
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: /backend/IdeaInvestigator.WebHost
+          path: backend/IdeaInvestigator.WebHost
 
   deploy:
     runs-on: ubuntu-latest
