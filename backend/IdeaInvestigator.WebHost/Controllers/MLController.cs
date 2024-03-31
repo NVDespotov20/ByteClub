@@ -83,8 +83,10 @@ namespace IdeaInvestigator.WebHost.Controllers
             };
             return Ok(responseDict);
         }
-        
-        public  async Task<string> CategorizeIdeaAsync([FromQuery] Guid ideaId, [FromQuery] Guid AuthedUserId)
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public  async Task<string> CategorizeIdeaAsync(Guid ideaId, Guid AuthedUserId)
         {
             var idea = await ideaService.GetIdeaByIdAsync(ideaId);
             if (idea == null)
@@ -130,15 +132,16 @@ namespace IdeaInvestigator.WebHost.Controllers
             chat.RequestParameters.Temperature = 0;
             chat.RequestParameters.ResponseFormat = OpenAI_API.Chat.ChatRequest.ResponseFormats.JsonObject;
             
-            chat.AppendSystemMessage("You are a bussiness assistent for different companies. People give you their ideas and a list of products that could potentionally be their competition. Your task is to analize the descriptions of the idea and the products and figure out how similar the product is to our idea. You give a comma seperated list of persentages of similarity to the client's idea: 50, 39, 70, ...");
-            // return model response as json object 
+            chat.AppendSystemMessage("You are a bussiness assistent for different companies. People give you their ideas and a list of products that could potentionally be their competition. Your task is to analize the descriptions of the idea and the products and figure out how similar the product is to our idea. You give a comma seperated list of percentages of similarity to the client's idea: 50, 39, 70, ...");
+            chat.AppendUserInput($"This is the idea of my company: {idea.Topic}\nI will be giving you the product names and product descriptions: ");
+
             string similarity = "";
             for(int i = 0; i < products.Count; i+=10)
             {
                 string prodBatch = "";
                 for(int j = i; j < i+10 && j < products.Count; j++)
                 {
-                    prodBatch += $"{j}. {products[j].Description}\n";       
+                    prodBatch += $"{j}. Product Name: {products[j].Name} Product Description: {products[j].Description}\n";       
                 }
                 chat.AppendUserInput(prodBatch);
                 similarity += await chat.GetResponseFromChatbotAsync();
@@ -150,8 +153,6 @@ namespace IdeaInvestigator.WebHost.Controllers
                 .ThenByDescending(x => x.i)
                 .Take(3)
                 .ToArray();
-
-            chat.AppendUserInput($"This is the idea of my company: {idea.Topic}\nI will be giving you the product descriptions in batches of 10. Here is the first batch:");
 
             List<Dictionary<string, string>> responseDict = 
             [

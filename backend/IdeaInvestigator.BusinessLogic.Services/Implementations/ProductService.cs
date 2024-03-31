@@ -70,11 +70,23 @@ namespace IdeaInvestigator.BusinessLogic.Services.Implementations
         public async Task<List<ProductVM>> MatchProductsByAtLeastOneCategoryAsync(List<string> categories)
         {
             var products = await context.Products.Where(p => categories.Any(c => p.Category.Contains(c))).ToListAsync();
+            
+
+            // take the products list and sort it by products, which have the most matching categories
+            products = products.OrderByDescending(p => categories.Count(c => p.Category.Contains(c)) / p.Category.Count(p => p == '|')).ToList();
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            foreach (var product in products)
+            {
+                System.Console.WriteLine($"name: {product.Name} categories: {product.Category}");
+            }
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             if (products == null)
                 return [];
 
-            return mapper.Map<List<ProductVM>>(products);
+            // return first 15 products in the list
+            
+            return mapper.Map<List<ProductVM>>(products.Take(15).ToList());
         }
     }
 }

@@ -65,18 +65,18 @@ export default function IdeaAnalysis() {
         })
     }
 
-    // useEffect(() => {
-    //     if (newIdeaComplete === null) return
+    useEffect(() => {
+        if (newIdeaComplete === null) return
 
-    //     axios.get(import.meta.env.VITE_BACKEND_URL + `/api/ml/find-competitors?ideaId=${newIdeaComplete}&AuthedUserId=${localStorage.getItem('userId')}`, {
-    //         headers: {
-    //             'Authorization': 'Bearer ' + localStorage.getItem('token')
-    //         }
-    //     }).then((response) => {
-    //         setCards(response.data)
-    //     })
+        axios.get(import.meta.env.VITE_BACKEND_URL + `/api/ml/find-competitors?ideaId=${newIdeaComplete}&AuthedUserId=${localStorage.getItem('userId')}`, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then((response) => {
+            setCards(response.data)
+        })
 
-    // }, [newIdeaComplete])
+    }, [newIdeaComplete])
 
     useEffect(() => {
         if (newIdeaComplete === null) return
@@ -193,7 +193,7 @@ export default function IdeaAnalysis() {
                         <Button type="submit" className="z-10">Submit Form</Button>
                     </form>
                     
-                    {isFormSubmitted && <div className="h-full z-10 grid grid-cols-3 place-items-center mt-10 gap-10">
+                    {isFormSubmitted && <div className="h-full mx-28 z-10 grid grid-cols-3 place-items-center mt-10 gap-10">
                         {
                             cards.map((card, index) => {
                                 return <Card key={index} title={card.name} description={card.description} image={card.image} />
