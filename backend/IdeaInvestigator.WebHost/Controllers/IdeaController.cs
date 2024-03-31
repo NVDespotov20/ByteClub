@@ -32,11 +32,11 @@ namespace IdeaInvestigator.WebHost.Controllers
         }
 
         [HttpPost("newIdea")]
-        public async Task<ActionResult> CreateNewIdeaAsync([FromBody] IdeaIM ideaInput, IAuthedUser authedUser)
+        public async Task<ActionResult<string>> CreateNewIdeaAsync([FromBody] IdeaIM ideaInput, IAuthedUser authedUser)
         {
-            var user = await ideaService.CreateNewIdeaAsync(ideaInput, authedUser.UserId);
+            var idea = await ideaService.CreateNewIdeaAsync(ideaInput, authedUser.UserId);
 
-            return Ok();
+            return Ok(new Dictionary<string, string> { { "id", idea.Id.ToString() } });
         }
     }
 }
