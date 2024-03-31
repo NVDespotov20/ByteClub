@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using IdeaInvestigator.BusinessLogic.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -118,6 +119,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(typeof(Mappings));
 builder.Services.AddServices();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddOpenApi(builder.Configuration["OpenAiApiKey"]!);
 
 var app = builder.Build();
 

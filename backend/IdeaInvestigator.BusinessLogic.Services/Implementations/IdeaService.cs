@@ -63,5 +63,15 @@ namespace IdeaInvestigator.BusinessLogic.Services.Implementations
 
             return mapper.Map<IdeaVM>(idea);
         }
+
+        public async Task<string?> GetIdeaCategoriesAsync(Guid id)
+        {
+            var idea = await context.Ideas.FirstOrDefaultAsync(i => i.Id == id);
+
+            if (idea == null)
+                return null;
+
+            return idea.Categories;
+        }
     }
 }

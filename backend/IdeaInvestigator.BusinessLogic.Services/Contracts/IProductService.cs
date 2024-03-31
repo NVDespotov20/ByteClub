@@ -16,7 +16,7 @@ namespace IdeaInvestigator.BusinessLogic.Services.Contracts
         /// Gets all products
         /// </summary>
         /// <returns>A list with the all the products</returns>
-        Task<List<ProductVM>?> GetAllProductsAsync();
+        Task<List<ProductVM>> GetAllProductsAsync();
 
         /// <summary>
         /// Gets a product via a supplied product ID
@@ -30,6 +30,21 @@ namespace IdeaInvestigator.BusinessLogic.Services.Contracts
         /// </summary>
         /// <param name="product">Product data</param>
         /// <returns>Product data</returns>
-        Task<(ProductVM?, IdentityResult)> CreateProductAsync(ProductIM product);
+        Task<ProductVM?> CreateProductAsync(ProductIM product);
+
+
+        /// <summary>
+        /// Gets all products by category
+        /// </summary>
+        /// <param name="category">category name</param>
+        /// <returns></returns>
+        Task<List<ProductVM>> GetProductsByCategoryAsync(string category);
+
+        /// <summary>
+        /// Matches products by at least one category
+        /// </summary>
+        /// <param name="categories">categories array</param>
+        /// <returns></returns>
+        Task<List<ProductVM>> MatchProductsByAtLeastOneCategoryAsync(List<string> categories);
     }
 }

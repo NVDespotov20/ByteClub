@@ -24,12 +24,12 @@ namespace IdeaInvestigator.BusinessLogic.Services.Implementations
             this.mapper = mapper;
         }
         
-        public async Task<List<ProductVM>?> GetAllProductsAsync()
+        public async Task<List<ProductVM>> GetAllProductsAsync()
         {
             var products = await context.Products.ToListAsync();
 
             if (products == null)
-                return null;
+                return [];
 
             return mapper.Map<List<ProductVM>>(products);
         }
@@ -44,7 +44,7 @@ namespace IdeaInvestigator.BusinessLogic.Services.Implementations
             return mapper.Map<ProductVM>(product);
         }
 
-        public async Task<(ProductVM?, IdentityResult)> CreateProductAsync(ProductIM product)
+        public async Task<ProductVM?> CreateProductAsync(ProductIM product)
         {
             var newProduct = mapper.Map<Product>(product);
 
@@ -52,9 +52,29 @@ namespace IdeaInvestigator.BusinessLogic.Services.Implementations
             var identityResult = await context.SaveChangesAsync();
 
             if (identityResult == 0)
-                return (null, IdentityResult.Failed(new IdentityError { Description = "Failed to create product" }));
+                return null;
 
-            return (mapper.Map<ProductVM>(newProduct), IdentityResult.Success);
+            return mapper.Map<ProductVM>(newProduct);
+        }
+
+        public async Task<List<ProductVM>> GetProductsByCategoryAsync(string category)
+        {
+            var products = await context.Products.Where(p => p.Category.Contains(category)).ToListAsync();
+
+            if (products == null)
+                return [];
+
+            return mapper.Map<List<ProductVM>>(products);
+        }
+
+        public async Task<List<ProductVM>> MatchProductsByAtLeastOneCategoryAsync(List<string> categories)
+        {
+            var products = await context.Products.Where(p => categories.Any(c => p.Category.Contains(c))).ToListAsync();
+
+            if (products == null)
+                return [];
+
+            return mapper.Map<List<ProductVM>>(products);
         }
     }
 }

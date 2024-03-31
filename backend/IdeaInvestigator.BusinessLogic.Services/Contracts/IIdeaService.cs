@@ -38,5 +38,12 @@ namespace IdeaInvestigator.BusinessLogic.Services.Contracts
         /// <param name="userId">the id of the user</param>
         /// <returns></returns>
         Task<IdeaVM?> CreateNewIdeaAsync(IdeaIM idea, Guid userId);
+
+        /// <summary>
+        /// Gets the idea categories
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<string?> GetIdeaCategoriesAsync(Guid id);
     }
 }

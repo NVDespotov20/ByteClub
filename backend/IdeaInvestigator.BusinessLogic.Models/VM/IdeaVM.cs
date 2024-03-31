@@ -9,6 +9,8 @@ namespace IdeaInvestigator.BusinessLogic.Models.VM
     public class IdeaVM
     {
         public Guid Id { get; set; }
+        
+        public Guid CreatorId { get; set; }
 
         public string Topic { get; set; } = null!;
 
@@ -21,5 +23,6 @@ namespace IdeaInvestigator.BusinessLogic.Models.VM
         public string Tags { get; set; } = null!;
 
         public int NumberOfCampaigns { get; set; } = 0;
+
     }
 }
