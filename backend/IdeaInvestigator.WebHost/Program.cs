@@ -84,6 +84,17 @@ if (builder.Environment.IsDevelopment())
                 .AllowAnyHeader());
     });
 }
+else
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(builder =>
+            builder
+                .WithOrigins("orange-glacier-0d96bb603.5.azurestaticapps.net")
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+    });
+}
 
 builder.Services.AddLogging(config =>
 {
