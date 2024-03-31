@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
 
 import { Api } from "@/api/Api"
 
 import eclipseOne from "/public/Eclipse.png"
 import eclipseTwo from "/public/Eclipse1.png"
-import { Eclipse } from "lucide-react"
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUp() {
     const [firstName, setFirstName] = useState<string>("")
@@ -21,7 +22,6 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState<string>("")
 
     let navigate = useNavigate()
-    const { toast } = useToast()
 
     useEffect(() => {
         if(localStorage.getItem('token') !== null)
@@ -32,10 +32,7 @@ export default function SignUp() {
         e.preventDefault()
 
         if (password !== confirmPassword) {
-            toast({
-                title: "Password mismatch",
-                description: "The password and confirm password do not match",
-            })
+            toast.error("Passwords do not match")
             return
         }
 
@@ -55,10 +52,7 @@ export default function SignUp() {
                 navigate("/signin")
             }
         }).catch((error) => {
-            toast({
-                title: "Error",
-                description: Object.values(error.errors).join("\n"),
-            })
+            toast.error(Object.values(error.errors).join("\n"))
         })
 
     }
@@ -115,6 +109,7 @@ export default function SignUp() {
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
         </div>
     )
 }

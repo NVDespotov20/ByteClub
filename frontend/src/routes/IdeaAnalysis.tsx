@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Card from "@/components/Card"
 import HistoryEntry from "@/components/HistoryEntry"
-import { useToast } from "@/components/ui/use-toast"
 import axios from "axios"
 
 import {
@@ -20,9 +19,11 @@ import {
 import gradientGreen from "/public/gradient-green.png"
 import gradientPurple from "/public/gradient-purple.png"
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function IdeaAnalysis() {
     const textRef = useRef<HTMLTextAreaElement>(null)
-    const { toast } = useToast()
     const [idea, setIdea] = useState<string>("")
 
     const [advertPlatforms, setAdvertPlatforms] = useState<string>("")
@@ -60,10 +61,7 @@ export default function IdeaAnalysis() {
             setNewIdeaComplete(response.data)
             setIsFormSubmitted(true)
         }).catch((error) => {
-            toast({
-                title: "Error",
-                description: Object.values(error.errors).join("\n"),
-            })
+            toast.error(error.response.data.message)
         })
     }
 
@@ -90,6 +88,8 @@ export default function IdeaAnalysis() {
         }).then((response) => {
             const posts = response.data.response.split("\n")
             setAdvices(posts)
+        }).catch((error) => {
+            console.log(error)
         })
     }, [newIdeaComplete])
 
@@ -100,6 +100,8 @@ export default function IdeaAnalysis() {
             }
         }).then((response) => {
             setGptResponse(response.data.response)
+        }).catch((error) => {
+            console.log(error)
         })
     }, [newIdeaComplete])
 
@@ -116,6 +118,8 @@ export default function IdeaAnalysis() {
             }
         }).then((response) => {
             setHistory(response.data.reverse())
+        }).catch((error) => {
+            toast.error(error.response.data.message)
         })
     }, [newIdeaComplete])
 
@@ -214,6 +218,7 @@ export default function IdeaAnalysis() {
                     </div>}
                 </div>
             </div>
+            <ToastContainer />
         </>
     )
 }

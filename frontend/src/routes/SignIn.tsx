@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 import { Api } from "@/api/Api"
-import { useToast } from "@/components/ui/use-toast"
 
 import eclipseOne from "/public/Eclipse.png"
 import eclipseTwo from "/public/Eclipse1.png"
 
-export default function SignIn() {
-    const { toast } = useToast()
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+export default function SignIn() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
@@ -40,10 +40,7 @@ export default function SignIn() {
                 navigate("/idea-analysis")
             }
         }).catch((error) => {
-            toast({
-                title: "Error",
-                description: error,
-            })
+            toast.error(error.response.data.message)
         })
 
     }
@@ -87,6 +84,7 @@ export default function SignIn() {
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
         </div>
     )
 }
